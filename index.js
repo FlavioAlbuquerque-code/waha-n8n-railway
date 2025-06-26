@@ -1,43 +1,36 @@
 const express = require('express');
-const { create } = require('@waha/core');
-const venom = require('@waha/venom');
+const { create } = require('@devlikeapro/waha-core');
+const venom = require('@devlikeapro/waha-venom');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
-let currentQrCode = '';
-
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
   res.send('WAHA com Venom está rodando! Vá para /qr para escanear o QR Code.');
 });
 
-app.get('/qr', (req, res) => {
-  if (currentQrCode) {
-    res.send(`<img src="data:image/png;base64,${currentQrCode}" />`);
-  } else {
-    res.send('QR Code ainda não gerado. Aguarde...');
-  }
-});
+let currentQrCode = '';
 
 const startBot = async () => {
   await create({
     driver: venom,
     port: 3001,
-    catchQR: (qrCode) => {
-      currentQrCode = qrCode;
-      console.log('✅ Escaneie o QR Code com seu WhatsApp Business');
+    catchQR: (qrCodeUrl) => {
+      currentQrCode = qrCodeUrl;
+      console.log('📲 Escaneie o QR Code:');
+      console.log(qrCodeUrl);
     },
     onConnected: () => {
-      console.log('🎉 WAHA conectado com sucesso!');
-    },
-    onDisconnected: () => {
-      console.log('⚠️ Desconectado. Reiniciando em 5 segundos...');
-      setTimeout(startBot, 5000);
+      console.log('🤖 Bot conectado com sucesso!');
     },
   });
 };
 
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+app.get('/qr', (_, res) => {
+  res.send(`<img src="${currentQrCode}" />`);
+});
+
+app.listen(port, () => {
+  console.log(`Servidor escutando em http://localhost:${port}`);
   startBot();
 });
