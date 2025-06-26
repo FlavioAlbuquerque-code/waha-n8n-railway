@@ -6,8 +6,8 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@waha/core": "github:devlikeapro/waha/packages/core",
-    "@waha/venom": "github:devlikeapro/waha/packages/venom",
+    "@waha/core": "^1.6.6",
+    "@waha/venom": "^1.6.6",
     "express": "^4.18.2"
   }
 }
