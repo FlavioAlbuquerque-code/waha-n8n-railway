@@ -8,7 +8,8 @@ create({
   session: 'sessionName',
   catchQR: (base64Qr, asciiQR, attempts, urlCode) => {
     console.log('QR Code:', asciiQR);
-  }
+  },
+  browserArgs: ['--no-sandbox', '--disable-setuid-sandbox']
 }).then((client) => {
   console.log('📱 Cliente conectado!');
 });
