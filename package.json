@@ -1,14 +1,13 @@
 {
-  "name": "waha-n8n-railway",
+  "name": "waha-railway",
   "version": "1.0.0",
-  "description": "WAHA com Venom + n8n na Railway",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "@waha/core": "^1.0.0",
-    "@waha/venom": "^1.0.0",
+    "@waha/core": "github:devlikeapro/waha#core",
+    "@waha/venom": "github:devlikeapro/waha#venom",
     "express": "^4.18.2"
   }
 }
