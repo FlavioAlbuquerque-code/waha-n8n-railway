@@ -1,36 +1,22 @@
 const express = require('express');
-const { create } = require('@devlikeapro/waha-core');
-const venom = require('@devlikeapro/waha-venom');
+const { create } = require('@wppconnect-team/wppconnect');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.get('/', (_, res) => {
-  res.send('WAHA com Venom está rodando! Vá para /qr para escanear o QR Code.');
+create({
+  session: 'sessionName',
+  catchQR: (base64Qr, asciiQR, attempts, urlCode) => {
+    console.log('QR Code:', asciiQR);
+  }
+}).then((client) => {
+  console.log('📱 Cliente conectado!');
 });
 
-let currentQrCode = '';
-
-const startBot = async () => {
-  await create({
-    driver: venom,
-    port: 3001,
-    catchQR: (qrCodeUrl) => {
-      currentQrCode = qrCodeUrl;
-      console.log('📲 Escaneie o QR Code:');
-      console.log(qrCodeUrl);
-    },
-    onConnected: () => {
-      console.log('🤖 Bot conectado com sucesso!');
-    },
-  });
-};
-
-app.get('/qr', (_, res) => {
-  res.send(`<img src="${currentQrCode}" />`);
+app.get('/', (req, res) => {
+  res.send('WAHA + WPPConnect rodando na Railway!');
 });
 
 app.listen(port, () => {
-  console.log(`Servidor escutando em http://localhost:${port}`);
-  startBot();
+  console.log(`🚀 Servidor rodando na porta ${port}`);
 });
