@@ -7,8 +7,8 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@devlikeapro/waha-core": "^1.6.6",
-    "@devlikeapro/waha-venom": "^1.6.6",
+    "@waha/core": "^1.6.6",
+    "@waha/venom": "^1.6.6",
     "express": "^4.18.2"
   }
 }
